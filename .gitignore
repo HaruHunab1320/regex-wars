@@ -77,6 +77,8 @@ web_modules/
 # Next.js build output
 .next
 out
+build/
+next-env.d.ts
 
 # Nuxt.js build / generate output
 .nuxt
@@ -137,3 +139,28 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# pnpm
+pnpm-debug.log*
+.pnpm-debug.log*
+
+# Bundle analyzer
+.next/analyze/
+
+# Vercel
+.vercel
+
+# Temporary files
+tmp/
+temp/
