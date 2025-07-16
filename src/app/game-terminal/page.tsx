@@ -252,6 +252,7 @@ export default function GameTerminalPage() {
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               className={styles.terminalInput}
+              style={{ width: `${Math.max(currentInput.length || (gameState.isPlaying ? 20 : 15), 1)}ch` }}
               placeholder={gameState.isPlaying ? "Enter regex pattern..." : "Type 'start' to begin"}
               autoComplete="off"
               spellCheck={false}

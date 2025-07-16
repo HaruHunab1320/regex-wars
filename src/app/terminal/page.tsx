@@ -16,7 +16,20 @@ export default function TerminalPage() {
     { text: 'REGEX WARS v1.0.0', type: 'system' },
     { text: '(c) 2024 CYBERDYNE SYSTEMS', type: 'system' },
     { text: '', type: 'output' },
-    { text: 'SYSTEM INITIALIZED', type: 'system' },
+    { text: '██████╗ ███████╗ ██████╗ ███████╗██╗  ██╗    ██╗    ██╗ █████╗ ██████╗ ███████╗', type: 'system' },
+    { text: '██╔══██╗██╔════╝██╔════╝ ██╔════╝╚██╗██╔╝    ██║    ██║██╔══██╗██╔══██╗██╔════╝', type: 'system' },
+    { text: '██████╔╝█████╗  ██║  ███╗█████╗   ╚███╔╝     ██║ █╗ ██║███████║██████╔╝███████╗', type: 'system' },
+    { text: '██╔══██╗██╔══╝  ██║   ██║██╔══╝   ██╔██╗     ██║███╗██║██╔══██║██╔══██╗╚════██║', type: 'system' },
+    { text: '██║  ██║███████╗╚██████╔╝███████╗██╔╝ ██╗    ╚███╔███╔╝██║  ██║██║  ██║███████║', type: 'system' },
+    { text: '╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝     ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝', type: 'system' },
+    { text: '', type: 'output' },
+    { text: 'Master the patterns. Conquer the grid.', type: 'output' },
+    { text: '', type: 'output' },
+    { text: 'AVAILABLE GAME MODES:', type: 'system' },
+    { text: '  [1] CAMPAIGN  - Progressive difficulty with structured learning', type: 'output' },
+    { text: '  [2] ZEN       - Practice mode with no time pressure', type: 'output' },
+    { text: '  [3] ARENA     - Real-time PvP battles (COMING SOON)', type: 'output' },
+    { text: '  [4] DEFENSE   - Tower-defense style gameplay (COMING SOON)', type: 'output' },
     { text: '', type: 'output' },
     { text: 'Type "help" for available commands', type: 'output' },
   ])
@@ -178,6 +191,7 @@ export default function TerminalPage() {
             onChange={(e) => setCurrentInput(e.target.value)}
             onKeyDown={handleKeyDown}
             className={styles.terminalInput}
+            style={{ width: `${Math.max(currentInput.length, 1)}ch` }}
             autoComplete="off"
             spellCheck={false}
           />

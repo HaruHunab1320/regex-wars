@@ -62,16 +62,7 @@ export default function CRTMonitor({
     >
       <div className={styles.monitorFrame}>
         <div className={styles.screen}>
-          {/* Screen curvature effect */}
-          {enableCurvature && <div className={styles.screenCurve} />}
-
-          {/* Phosphor glow */}
-          <div className={styles.phosphorGlow} />
-
-          {/* Glass bulge effect */}
-          {enableCurvature && <div className={styles.glassBulge} />}
-
-          {/* Main content */}
+          {/* Main content - lowest layer */}
           <div
             className={clsx(
               styles.screenContent,
@@ -88,7 +79,16 @@ export default function CRTMonitor({
             {children}
           </div>
 
-          {/* CRT Effects Layers */}
+          {/* Phosphor glow - above content */}
+          <div className={styles.phosphorGlow} />
+
+          {/* Glass bulge effect */}
+          {enableCurvature && <div className={styles.glassBulge} />}
+
+          {/* Screen curvature with corner glows - above other effects */}
+          {enableCurvature && <div className={styles.screenCurve} />}
+
+          {/* CRT Effects Layers - highest layers */}
           {isPowered && (
             <>
               {enableScanlines && (

@@ -1,58 +1,111 @@
+'use client'
+
+import React, { useState, useEffect, useRef } from 'react'
 import CRTMonitor from '@/components/ui/CRTMonitor'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import styles from './terminal/terminal.module.css'
+
+interface TerminalLine {
+  text: string
+  type: 'input' | 'output' | 'system' | 'error'
+}
 
 export default function HomePage() {
+  const router = useRouter()
+  const [lines, setLines] = useState<TerminalLine[]>([
+    { text: 'REGEX WARS v1.0.0', type: 'system' },
+    { text: '(c) 2024 CYBERDYNE SYSTEMS', type: 'system' },
+    { text: '', type: 'output' },
+    { text: 'SYSTEM BOOT SEQUENCE INITIATED...', type: 'system' },
+    { text: '', type: 'output' },
+    { text: '> Initializing pattern recognition engine...', type: 'output' },
+    { text: '> Loading regex compiler...', type: 'output' },
+    { text: '> Calibrating display matrix...', type: 'output' },
+    { text: '', type: 'output' },
+    { text: 'SYSTEM READY', type: 'system' },
+    { text: '', type: 'output' },
+    { text: 'Welcome to REGEX WARS - Master the patterns. Conquer the grid.', type: 'output' },
+    { text: '', type: 'output' },
+    { text: 'Press ENTER to continue...', type: 'output' },
+  ])
+  const [currentInput, setCurrentInput] = useState('')
+  const [hasStarted, setHasStarted] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const terminalRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+    }
+  }, [lines])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!hasStarted) {
+      setHasStarted(true)
+      setLines(prev => [
+        ...prev,
+        { text: '> ', type: 'input' },
+        { text: 'ENTERING TERMINAL...', type: 'system' },
+      ])
+      setTimeout(() => {
+        router.push('/terminal')
+      }, 1000)
+    }
+    
+    setCurrentInput('')
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (!hasStarted && e.key !== 'Tab') {
+      setHasStarted(true)
+      setLines(prev => [
+        ...prev,
+        { text: '> ', type: 'input' },
+        { text: 'ENTERING TERMINAL...', type: 'system' },
+      ])
+      setTimeout(() => {
+        router.push('/terminal')
+      }, 1000)
+    }
+  }
+
   return (
     <CRTMonitor>
-      <main className="flex min-h-screen flex-col items-center justify-center font-mono">
-        <div className="text-center space-y-6 max-w-4xl px-8">
-          <div className="space-y-2">
-            <h1 className="text-5xl font-normal text-neon-green text-terminal-glow tracking-wider">
-              REGEX WARS
-            </h1>
-            <div className="text-xs text-green-400/60 tracking-widest">
-              v1.0.0 - SYSTEM READY
+      <div className={styles.terminalContainer}>
+        <div ref={terminalRef} className={styles.terminalOutput}>
+          {lines.map((line, index) => (
+            <div
+              key={index}
+              className={`${styles.terminalLine} ${styles[line.type]}`}
+            >
+              {line.text}
             </div>
-          </div>
-          
-          <p className="text-base text-green-400/80 tracking-wide">
-            &gt; Master the patterns. Conquer the grid.
-          </p>
-          
-          <div className="pt-8">
-            <Link href="/terminal">
-              <div className="text-base text-green-400 hover:text-green-400/80 transition-all cursor-pointer">
-                <span className="animate-pulse">_</span> Press any key to continue...
-              </div>
-            </Link>
-          </div>
-          
-          <div className="mt-12 space-y-3 text-xs text-green-400/70 text-left max-w-2xl mx-auto">
-            <div className="flex items-start gap-2">
-              <span className="text-green-400">&gt;</span>
-              <div>
-                <span className="text-green-400">GAME_MODE_01:</span> Learn regex patterns through progressive gameplay
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-green-400">&gt;</span>
-              <div>
-                <span className="text-green-400">GAME_MODE_02:</span> Real-time pattern matching with visual feedback
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-green-400">&gt;</span>
-              <div>
-                <span className="text-green-400">GAME_MODE_03:</span> Multiplayer arena and leaderboard system
-              </div>
-            </div>
-          </div>
-          
-          <div className="pt-6 text-xs text-green-400/50">
-            <span className="animate-pulse">_</span> Press any key to continue...
-          </div>
+          ))}
         </div>
-      </main>
+        
+        <form onSubmit={handleSubmit} className={styles.terminalInputForm}>
+          <span className={styles.prompt}>&gt;</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={currentInput}
+            onChange={(e) => setCurrentInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+            className={styles.terminalInput}
+            style={{ width: `${Math.max(currentInput.length, 1)}ch` }}
+            autoComplete="off"
+            spellCheck={false}
+            readOnly={!hasStarted}
+          />
+          <span className={styles.cursor}>_</span>
+        </form>
+      </div>
     </CRTMonitor>
   )
 }
