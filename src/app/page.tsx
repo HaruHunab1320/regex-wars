@@ -1,4 +1,5 @@
 import CRTMonitor from '@/components/ui/CRTMonitor'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
@@ -18,13 +19,12 @@ export default function HomePage() {
             &gt; Master the patterns. Conquer the grid.
           </p>
           
-          <div className="flex gap-6 justify-center pt-4">
-            <button className="px-6 py-2 border border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 transition-all text-sm tracking-wider">
-              [S]TART GAME
-            </button>
-            <button className="px-6 py-2 border border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 transition-all text-sm tracking-wider">
-              [T]UTORIAL
-            </button>
+          <div className="pt-8">
+            <Link href="/terminal">
+              <div className="text-base text-green-400 hover:text-green-400/80 transition-all cursor-pointer">
+                <span className="animate-pulse">_</span> Press any key to continue...
+              </div>
+            </Link>
           </div>
           
           <div className="mt-12 space-y-3 text-xs text-green-400/70 text-left max-w-2xl mx-auto">

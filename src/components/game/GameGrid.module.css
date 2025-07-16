@@ -1,0 +1,82 @@
+.gameGridContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.gameGrid {
+  display: grid;
+  gap: 1px;
+  background: rgba(0, 255, 65, 0.1);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  padding: 2px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 900px;
+  aspect-ratio: 2/3;
+}
+
+.gridCell {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(0, 255, 65, 0.8);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gridCell:empty::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 255, 65, 0.02);
+}
+
+.gridCell.highlighted {
+  background: rgba(0, 255, 65, 0.3);
+  color: #00ff41;
+  border-color: #00ff41;
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.8);
+  animation: pulse 0.5s ease-in-out infinite;
+}
+
+.gridCell.falling {
+  animation: fallAnimation 0.2s ease-in;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  }
+}
+
+@keyframes fallAnimation {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gridCell {
+    font-size: 0.7rem;
+  }
+}
